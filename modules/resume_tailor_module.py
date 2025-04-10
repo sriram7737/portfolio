@@ -1,12 +1,11 @@
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 import torch
 
-print(">> Loading TinyLlama Model...")
+from peft import PeftModel
+from transformers import AutoModelForCausalLM
 
-model_path = "./tinyllama-resume-bot"
-
-tokenizer = AutoTokenizer.from_pretrained(model_path)
-model = AutoModelForCausalLM.from_pretrained(model_path)
+base_model = AutoModelForCausalLM.from_pretrained("TinyLlama/TinyLlama-1.1B-Chat-v1.0")
+model = PeftModel.from_pretrained(base_model, "sriram7737/resume")
 
 generator = pipeline(
     "text-generation",
