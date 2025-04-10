@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Results</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h2>🧠 Job Listings</h2>
+
+    {% if jobs %}
+        <form method="POST" action="/apply">
+        {% for job in jobs %}
+            <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+                <strong>{{ job.title }}</strong> at {{ job.company }} ({{ job.location }})<br>
+                <em>{{ job.description }}</em><br><br>
+                <input type="hidden" name="title" value="{{ job.title }}">
+                <input type="hidden" name="company" value="{{ job.company }}">
+                <input type="hidden" name="location" value="{{ job.location }}">
+                <input type="hidden" name="description" value="{{ job.description }}">
+                <button type="submit">Apply with Tailored Resume</button>
+            </div>
+        {% endfor %}
+        </form>
+    {% else %}
+        <p>No jobs found. Try a different role or location.</p>
+    {% endif %}
+</body>
+</html>
